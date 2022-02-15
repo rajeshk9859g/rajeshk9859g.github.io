@@ -14,14 +14,16 @@
             <input type="submit" value="Bind Info" onclick="bind()" /><br /> <br />
             <input type="submit" value="Get visitorInfo" onclick="getvisitorInfo()" /><br /><br />
             <input type="submit" value="Get chatInfo" onclick="getchatInfo()" /><br /><br />
-            <input type="submit" value="Quick Reply" onclick="quickReply()" />
+            <input type="submit" value="Quick Reply" onclick="quickReply()" /><br /><br />
+            <input type="submit" value="Send Notification" onclick="notification()" />
+
 
         </form>
     </div>
     <script>
         lpTag.agentSDK.init({});
 
-        var pathToData = "visitorInfo"; //chatInfo visitorInfo.visitorName
+        var pathToData = "visitorInfo"; //chatInfo visitorInfo.visitorName notification
 
         var onSuccess = function (data) {
             console.log(JSON.stringify(data));
@@ -67,8 +69,27 @@
             lpTag.agentSDK.command(cmdName, data, notifyWhenDone);
         }  
 
-     
+        var notification = function () {
+            var cmdName = "Send Notification";
+            var data = { text: "Notification-doing.." };
+            lpTag.agentSDK.command(cmdName, data, notifyWhenDone);
+        }
 
+        var sendFile = function () {
+            var cmdName = "Send File";
+            var url = 'https://some/url/to/a/file.png';
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'blob';
+            xhr.onload = function (ev) {
+                if (this.status === 200) {
+                    var file = this.response;
+                    var name = url.split('\\').pop().split('/').pop();
+                    lpTag.agentSDK.command(cmdName, { file: file, name: name }, notifyWhenDone);
+                }
+            };
+            xhr.send();
+        }
     </script>
 </body>
 </html>
