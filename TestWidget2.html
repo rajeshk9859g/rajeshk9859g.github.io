@@ -10,28 +10,46 @@
 </head>
 <body>
     <div class="container">
-        <form >            
-            <input type="submit" value="getInfo" onclick="get()" />
+        <form>
+            <input type="submit" value="Bind Info" onclick="bind()" />
+
+            <input type="submit" value="Get Info" onclick="get()" />
+
         </form>
     </div>
 <script>
     lpTag.agentSDK.init({});
 
-    pathToData = "visitorInfo.visitorName";
+    pathToData = "consumerInfo.country"; //consumerInfo.country visitorInfo.visitorName
 
-    var onSuccess = function (data) {
-        // Do something with the returning data
+    var onSuccess = function (data) {       
         console.log(data);
+        alert(data);
     };
 
-    var onError = function (err) {
-        // Do something with the error
+    var onError = function (err) {      
         console.log(err);
     };
     var get = function () {
         lpTag.agentSDK.get(pathToData, onSuccess, onError);
     }
-    
+
+    var updateCallback = function (data) {
+        
+        var path = data.key;
+        var value = data.newValue;
+        alert(path);
+        alert(value);      
+    };
+
+    var notifyWhenDone = function (err) {
+        if (err) {
+            
+        }        
+    };
+    var bind = function () {
+        lpTag.agentSDK.bind(pathToData, updateCallback, notifyWhenDone);
+    }
 </script>
 </body>
 </html>
