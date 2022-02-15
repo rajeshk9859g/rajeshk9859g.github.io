@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -11,27 +11,32 @@
 <body>
     <div class="container">
         <form>
-            <input type="submit" value="Bind Info" onclick="bind()" /><br/> <br/> <br/>
-
-            <input type="submit" value="Get Info" onclick="get()" />
-
+            <input type="submit" value="Bind Info" onclick="bind()" /><br/> <br />
+            <input type="submit" value="Get visitorInfo" onclick="getvisitorInfo()" /><br /><br />
+            <input type="submit" value="Get chatInfo" onclick="getchatInfo()" />
         </form>
     </div>
 <script>
     lpTag.agentSDK.init({});
 
-    pathToData = "visitorInfo.visitorName"; //consumerInfo.country visitorInfo.visitorName
+    var pathToData = "visitorInfo"; //chatInfo visitorInfo.visitorName
 
     var onSuccess = function (data) {       
         console.log(data);
-        alert(data);
+       
     };
 
     var onError = function (err) {      
         console.log(err);
     };
-    var get = function () {
+    var getvisitorInfo = function () {
+        pathToData = "visitorInfo";
         lpTag.agentSDK.get(pathToData, onSuccess, onError);
+    }
+
+    var getchatInfo = function () {
+         pathToData = "chatInfo"; //chatInfo visitorInfo.visitorNames
+         lpTag.agentSDK.get(pathToData, onSuccess, onError);
     }
 
     var updateCallback = function (data) {
