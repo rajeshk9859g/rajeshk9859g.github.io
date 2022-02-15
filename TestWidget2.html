@@ -24,7 +24,7 @@
         var pathToData = "visitorInfo"; //chatInfo visitorInfo.visitorName
 
         var onSuccess = function (data) {
-            console.log(data);
+            console.log(JSON.stringify(data));
 
         };
 
@@ -45,7 +45,7 @@
             data.newValue = 'Visitor TestBind';
             var path = data.key;
             var value = data.newValue;
-            console.log(data);
+            console.log(JSON.stringify(data));
             console.log(path);
             console.log(value);
            // data.newValue = 'Visitor TestBind';
@@ -67,7 +67,7 @@
             lpTag.agentSDK.command(cmdName, data, notifyWhenDone);
         }  
 
-        
+     
 
     </script>
 </body>
