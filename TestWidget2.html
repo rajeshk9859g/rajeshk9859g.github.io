@@ -43,8 +43,9 @@
         
         var path = data.key;
         var value = data.newValue;
-        alert(path);
-        alert(value);      
+        console.log(data);
+        console.log(path);
+        console.log(value);            
     };
 
     var notifyWhenDone = function (err) {
@@ -53,6 +54,7 @@
         }        
     };
     var bind = function () {
+        pathToData = "visitorInfo.visitorName";
         lpTag.agentSDK.bind(pathToData, updateCallback, notifyWhenDone);
     }
 </script>
