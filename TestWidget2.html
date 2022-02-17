@@ -94,37 +94,21 @@
             
             var data = {
                 json: {
-                    "text": "Creditone",
-                    "type": "vertical",
-                    "elements": [
-                        {
-                            "type": "map",
-                            "lo": "-73.99852590",
-                            "la":"40.7562724",
-                            "tooltip": "Map",
-                            "click": {
-                                "actions": [
-                                    {
-                                        "type": "navigate",
-                                        "name": "navigate",
-                                        "lo":"-73.99852590",
-                                        "la": "40.7562724"
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "type": "text",
-                            "text": "1234 Hollywood Boulevard, Los Angeles, CA"
-                        },
-                    ],
-                    "metadata": {
-                        "fallback": "https://www.google.com/maps/@?api=1&map_action=map" }
-                },
-                metadata: [	//metadata is optional
-                    { "type": "ExternalId", "id": "running364" },
-                    { "type": "ExternalId", "id": "soccer486" }
-                ]
+                    "type": "image",
+                    "url": "https://cdn.bgr.com/2016/08/iphone-8-concept.jpg?quality=98&strip=all",
+                    "caption": "This is an example of image caption",
+                    "click": {
+                        "metadata": [{
+                        }],
+                        "actions": [{
+                            "type": "link",
+                            "name": "Add to cart",
+                            "uri": "https://www.example.com"
+                        }]
+                    },
+                    "tooltip": "image tooltip",
+                    "rtl": true
+                }
             };
 
             lpTag.agentSDK.command(cmdName, data, notifyWhenDone);
