@@ -15,8 +15,12 @@
             <input type="submit" value="Get visitorInfo" onclick="getvisitorInfo()" /><br /><br />
             <input type="submit" value="Get chatInfo" onclick="getchatInfo()" /><br /><br />
             <input type="submit" value="Quick Reply" onclick="quickReply()" /><br /><br />
-            <input type="submit" value="Send Notification" onclick="notification()" /><br /><br />
-            <input type="submit" value="Write StructuredContent" onclick="writeStructuredContent()" />
+            <!--<input type="submit" value="Send Notification" onclick="notification()" /><br /><br />-->
+            <input type="submit" value="Write StructuredContent Image" onclick="writeStructuredContentImage()" />
+            <input type="submit" value="Write StructuredContent Map" onclick="writeStructuredContentMap()" />
+            <input type="submit" value="Write StructuredContent Simple" onclick="writeStructuredContentSimple()" />
+
+
         </form>
     </div>
     <script>
@@ -89,7 +93,7 @@
             xhr.send();
         }
         //write StructuredContent
-        var writeStructuredContent = function () {
+        var writeStructuredContentImage = function () {
             var cmdName = lpTag.agentSDK.cmdNames.writeSC; // = "Write StructuredContent"
             
             var data = {
@@ -109,6 +113,55 @@
                     "tooltip": "image tooltip",
                     "rtl": true
                 }
+            };
+
+            lpTag.agentSDK.command(cmdName, data, notifyWhenDone);
+        }
+
+        var writeStructuredContentMap = function () {
+            var cmdName = lpTag.agentSDK.cmdNames.writeSC; // = "Write StructuredContent"
+
+            var data = {
+                json: {
+                    "type": "map",
+                    "la": 40.75620,
+                    "lo": -73.99861,
+                    "click": {
+                        "metadata": [{
+                        }],
+                        "actions": [{
+                            "type": "navigate",
+                            "la": 40.75620,
+                            "lo": -73.99861,
+                        }]
+                    },
+                    "tooltip": "map tooltip"
+                }
+            };
+
+            lpTag.agentSDK.command(cmdName, data, notifyWhenDone);
+        }
+
+        var writeStructuredContentSimple = function () {
+            var cmdName = lpTag.agentSDK.cmdNames.writeSC; // = "Write StructuredContent"
+
+            var data = {
+                json: {
+                    "type": "button",
+                    "title": "Push Me!",
+                    "click": {
+                        "metadata": [{
+                        }],
+                        "actions": [{
+                            "type": "link",
+                            "name": "Add to cart",
+                            "uri": "https://www.example.com"
+                        }]
+                    },
+                    "tooltip": "button tooltip",
+                    "rtl": true
+                }
+
             };
 
             lpTag.agentSDK.command(cmdName, data, notifyWhenDone);
