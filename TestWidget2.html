@@ -15,19 +15,17 @@
             <input type="submit" value="Get visitorInfo" onclick="getvisitorInfo()" /><br /><br />
             <input type="submit" value="Get chatInfo" onclick="getchatInfo()" /><br /><br />
             <input type="submit" value="Quick Reply" onclick="quickReply()" /><br /><br />
-            <input type="submit" value="Send Notification" onclick="notification()" />
-
-
+            <input type="submit" value="Send Notification" onclick="notification()" /><br /><br />
+            <input type="submit" value="Write StructuredContent" onclick="writeStructuredContent()" />
         </form>
     </div>
     <script>
         lpTag.agentSDK.init({});
 
-        var pathToData = "visitorInfo"; //chatInfo visitorInfo.visitorName notification
+        var pathToData = "visitorInfo"; //chatInfo visitorInfo.visitorName notification 
 
         var onSuccess = function (data) {
             console.log(JSON.stringify(data));
-
         };
 
         var onError = function (err) {
@@ -89,6 +87,27 @@
                 }
             };
             xhr.send();
+        }
+        //write StructuredContent
+        var writeStructuredContent = function () {
+            var cmdName = lpTag.agentSDK.cmdNames.writeSC; // = "Write StructuredContent"
+            var data = {
+                json: {
+                    "type": "text",
+                    "text": "product name",
+                    "tooltip": "text tooltip",
+                    "style": {
+                        "bold": true,
+                        "size": "large"
+                    }
+                },
+                metadata: [	//metadata is optional
+                    { "type": "ExternalId", "id": "running364" },
+                    { "type": "ExternalId", "id": "soccer486" }
+                ]
+            };
+
+            lpTag.agentSDK.command(cmdName, data, notifyWhenDone);
         }
     </script>
 </body>
