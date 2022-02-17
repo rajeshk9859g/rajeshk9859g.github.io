@@ -1,4 +1,98 @@
-  var data = {
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title UserConfirmationText></title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <script src="https://lpcdn.lpsnmedia.net/webagent/client-SDK.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <form>
+            <input type="submit" value="Bind Info" onclick="bind()" /><br /> <br />
+            <input type="submit" value="Get visitorInfo" onclick="getvisitorInfo()" /><br /><br />
+            <input type="submit" value="Get chatInfo" onclick="getchatInfo()" /><br /><br />
+            <input type="submit" value="Quick Reply" onclick="quickReply()" /><br /><br />
+            <input type="submit" value="Send Notification" onclick="notification()" /><br /><br />
+            <input type="submit" value="Write StructuredContent" onclick="writeStructuredContent()" />
+        </form>
+    </div>
+    <script>
+        lpTag.agentSDK.init({});
+
+        var pathToData = "visitorInfo"; //chatInfo visitorInfo.visitorName notification 
+
+        var onSuccess = function (data) {
+            console.log(JSON.stringify(data));
+        };
+
+        var onError = function (err) {
+            console.log(err);
+        };
+        var getvisitorInfo = function () {
+            pathToData = "visitorInfo";
+            lpTag.agentSDK.get(pathToData, onSuccess, onError);
+        }
+
+        var getchatInfo = function () {
+            pathToData = "chatInfo"; //chatInfo visitorInfo.visitorNames
+            lpTag.agentSDK.get(pathToData, onSuccess, onError);
+        }
+
+        var updateCallback = function (data) {
+            data.newValue = 'Visitor TestBind';
+            var path = data.key;
+            var value = data.newValue;
+            console.log(JSON.stringify(data));
+            console.log(path);
+            console.log(value);
+           // data.newValue = 'Visitor TestBind';
+        };
+
+        var notifyWhenDone = function (err) {
+            if (err) {
+                console.log(err);
+            }
+        };
+        var bind = function () {
+            pathToData = "visitorInfo.visitorName";
+            lpTag.agentSDK.bind(pathToData, updateCallback, notifyWhenDone);
+        }       
+
+        var quickReply = function () {
+            var cmdName = lpTag.agentSDK.cmdNames.write; // = "Write ChatLine" 
+            var data = { text: "Text to quick replies " };
+            lpTag.agentSDK.command(cmdName, data, notifyWhenDone);
+        }  
+
+        var notification = function () {
+            var cmdName = "Send Notification";
+            var data = { text: "Notification-doing.." };
+            lpTag.agentSDK.command(cmdName, data, notifyWhenDone);
+        }
+
+        var sendFile = function () {
+            var cmdName = "Send File";
+            var url = 'https://some/url/to/a/file.png';
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'blob';
+            xhr.onload = function (ev) {
+                if (this.status === 200) {
+                    var file = this.response;
+                    var name = url.split('\\').pop().split('/').pop();
+                    lpTag.agentSDK.command(cmdName, { file: file, name: name }, notifyWhenDone);
+                }
+            };
+            xhr.send();
+        }
+        //write StructuredContent
+        var writeStructuredContent = function () {
+            var cmdName = lpTag.agentSDK.cmdNames.writeSC; // = "Write StructuredContent"
+            
+            var data = {
                 json: {
                     "text": yourBusinessName,
                     "type": "vertical",
@@ -32,3 +126,9 @@
                     { "type": "ExternalId", "id": "soccer486" }
                 ]
             };
+
+            lpTag.agentSDK.command(cmdName, data, notifyWhenDone);
+        }
+    </script>
+</body>
+</html>
